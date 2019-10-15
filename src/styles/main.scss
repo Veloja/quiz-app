@@ -1,0 +1,10 @@
+@import './header';
+@import './reset';
+@import './layout';
+@import './variables';
+@import '../templates/Question/question.scss';
+
+body {
+	color: $black;
+	font-family: $font-default;
+}
