@@ -105,6 +105,7 @@ function startGame() {
     questionsEl.classList.remove('questions--hidden');
     currentQuestionIndex = 0;
     score = 0;
+    questionTitle.innerHTML = `Question ${currentQuestionIndex + 1} of ${questions.length}`
     setNextQuestion(questions[currentQuestionIndex]);
 }
 
