@@ -88,7 +88,7 @@ function showAllYourScores() {
 function showFinalScores(newestScores) {
     scoresElement.classList.remove('scores--hidden');
     finishBtn.classList.add('btn--hidden');
-    finishEl.classList.add('btn--hidden');
+    finishEl.classList.add('finish--hidden');
     LocalStorage.scoresUpdated(newestScores);
 }
 
