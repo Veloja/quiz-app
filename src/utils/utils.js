@@ -14,3 +14,11 @@ export function setTwoRemainingAnswers(array) {
     }
     return results[Math.floor(Math.random() * results.length)];
 }
+
+export function getDate(score) {
+    const dateObj = new Date();
+    const month = dateObj.getUTCMonth() + 1;
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    return { date: `${year}/${month}/${day}`, score };
+}

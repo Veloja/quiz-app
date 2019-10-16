@@ -2,7 +2,9 @@
 @import './reset';
 @import './layout';
 @import './variables';
-@import '../templates/Question/question.scss';
+@import './questions.scss';
+@import './scores';
+@import './btns';
 
 body {
 	color: $black;

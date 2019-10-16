@@ -1,4 +1,8 @@
 
+.questions--hidden {
+    display: none;
+}
+
 .question__image {
     width: 100%;
     position: relative;
@@ -6,6 +10,16 @@
     display: block;
     overflow: hidden;
     margin-bottom: 20px;
+    background-position: center;
+    background-size: cover;
+}
+
+.scores--hidden {
+    display: none;
+}
+
+.finish--hidden {
+    display: none;
 }
 
 .question__image-img {
@@ -14,4 +28,8 @@
     left: 0;
     width: 100%;
     height: auto;
+}
+
+.btn--hidden {
+    display: none;
 }

@@ -1,0 +1,78 @@
+.btn {
+    border-radius: 10px;
+    border: 0;
+    display: block;
+    margin: 0 auto;
+    transition: background-color $dur $ease, color $dur $ease;
+    padding: 10px 25px;
+    font-family: $font-default;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    outline: none;
+    margin-bottom: 20px;
+    &.correct {
+        background-color: $green;
+    }
+    &.wrong {
+        background-color: $red;
+    }
+}
+
+.btn--hidden {
+    display: none;
+}
+
+.btn--answer {
+    border: 1px solid $yellow;
+    background-color: $white;
+    color: $black;
+    width: 90%;
+}
+
+.btn--active {
+    background-color: $yellow;
+    color: $white;
+}
+
+.btn__result {
+    font-size: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $dur $ease;
+    text-transform: uppercase;
+}
+
+.btn__result--active {
+    opacity: 1;
+}
+
+.btn__result--correct {
+    color: $green;
+}
+
+.btn__result--wrong {
+    color: $red;
+}
+
+.btn__next {
+    background-color: $green;
+    opacity: 0;
+    transition: opacity $dur $ease;
+    color: $white;
+}
+
+.btn__next--active {
+    background-color: $green;
+    opacity: 1;
+    transition: opacity $dur $ease;
+}
+
+.btn__start, .btn__finish {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20%;
+}

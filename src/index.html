@@ -9,10 +9,25 @@
 </head>
 <body>
     <header class="header">
-		<h2 class="header__title">Continet quiz</h2>
+		<h2 class="header__title">Continent quiz</h2>
 	</header>
 	<div class="wrap">
-		<div id="questions"></div>
+        <div class="scores" id="scores">
+            Your latest scores
+        </div>
+        <div class="finish finish--hidden" id="finish">
+            Your final score is
+        </div>
+		<div id="questions" class="questions questions--hidden">
+            <div class="question">
+                <h3 class="question__title">Question 1 of 5</h3>
+                <div id="image" class="question__image" style=""></div>
+                <div class="question__btns" id="btns"></div>
+                <button class="btn btn__next btn__next--active">Next</button>
+            </div>
+        </div>
+        <button class="btn btn__start btn--green">Start game</button>
+        <button class="btn btn__finish btn--green btn--hidden">Finish game</button>
 	</div>
 </body>
 </html>
