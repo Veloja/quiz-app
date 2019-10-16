@@ -82,6 +82,7 @@ function showAllYourScores() {
         date: Utils.getDate().date
     }
     showFinalScores(LocalStorage.retrieveClearAndUpdateScores(newScore));
+    startBtn.classList.remove('btn--hidden');
 }
 
 function showFinalScores(newestScores) {
@@ -102,6 +103,8 @@ function startGame() {
     scoresElement.classList.add('scores--hidden');
     startBtn.classList.add('btn--hidden');
     questionsEl.classList.remove('questions--hidden');
+    currentQuestionIndex = 0;
+    score = 0;
     setNextQuestion(questions[currentQuestionIndex]);
 }
 

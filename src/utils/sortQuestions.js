@@ -6,6 +6,7 @@ export function startHandlingQuestions(myArray, chunk_size) {
     return shuffle(results);
 }
 
+
 function shuffle(arrToShuffle) {
     for (let i = arrToShuffle.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
