@@ -1,39 +1,10 @@
 import './styles/main.scss';
-// function setStateAnswers(fiveQuestions) {
-//     const correctAnwser = fiveQuestions[state.currentQuestion];
-//     const filteredQuestionsNotToHaveCorrectAnsw = questions.filter(question => question !== correctAnwser.continent);
-//     const shuffledArrayWithoutCorrectAnswer = Utils.shuffle(filteredQuestionsNotToHaveCorrectAnsw);
-//     const twoAnswers = Utils.setTwoRemainingAnswers(shuffledArrayWithoutCorrectAnswer);
-//     return { twoAnswers, correctAnwser };
-// }
 
 import * as Utils from './utils/utils';
 import * as Template from './templates/templates';
 import * as LocalStorage from './local-storage/localStorage';
-
-const questions = [
-    {
-        question: {
-            image: 'https://i.imgur.com/vWlrNXk.jpg',
-            continent: 'Asia'
-        },
-        answers: ['Antartica', 'Europe', 'Asia']
-    },
-    {
-        question: {
-            image: 'https://i.imgur.com/sczp9om.jpg',
-            continent: 'Europe'
-        },
-        answers: ['Antartica', 'Europe', 'test 22']
-    },
-    {
-        question: {
-            image: 'https://i.imgur.com/nLUAr4P.jpg',
-            continent: 'Antartica'
-        },
-        answers: ['Antartica', 'Europe', 'TEst 333']
-    }
-];
+import { allQuestions } from './API/API';
+import { startHandlingQuestions } from './utils/sortQuestions';
 
 const questionImage = document.querySelector('#image');
 const questionsEl = document.querySelector('#questions');
@@ -49,6 +20,37 @@ let currentQuestionIndex = 0;
 let score = 0;
 
 window.onload = LocalStorage.setAllScores();
+let finalQuestions = [];
+
+window.onload = async function() {
+    const questionsFromApi = await allQuestions();
+    const alwaysFiveRandomQuestions = startHandlingQuestions(questionsFromApi, 5);
+    console.log('alwaysFiveRandomQuestions', alwaysFiveRandomQuestions);
+    finalQuestions = alwaysFiveRandomQuestions.map((question, index) => {
+        console.log(question);
+        if(question.continent === alwaysFiveRandomQuestions[index].continent) {
+            const answers = alwaysFiveRandomQuestions.map(answ => {
+                if(answ.continent !== alwaysFiveRandomQuestions[index].continent) {
+                    return answ.continent;
+                }
+            })
+            const onlyTwoAnswers = answers.filter(answ =>
+                answ !== alwaysFiveRandomQuestions[index].continent && answ !== this.undefined
+            ).slice(0, 2);
+            return {
+                question: {
+                    ...question,
+                    answers: [question.continent, ...onlyTwoAnswers]
+                }
+            }
+        }
+    })
+    console.log('finalQuestions', finalQuestions);
+}
+
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
 
 startBtn.addEventListener('click', startGame);
 finishBtn.addEventListener('click', showAllYourScores);
@@ -147,3 +149,28 @@ function clearClasses(element) {
     element.classList.remove('wrong');
     element.classList.remove('correct');
 }
+
+
+const questions = [
+    {
+        question: {
+            image: 'https://i.imgur.com/vWlrNXk.jpg',
+            continent: 'Asia'
+        },
+        answers: ['Antartica', 'Europe', 'Asia']
+    },
+    {
+        question: {
+            image: 'https://i.imgur.com/sczp9om.jpg',
+            continent: 'Europe'
+        },
+        answers: ['Antartica', 'Europe', 'test 22']
+    },
+    {
+        question: {
+            image: 'https://i.imgur.com/nLUAr4P.jpg',
+            continent: 'Antartica'
+        },
+        answers: ['Antartica', 'Europe', 'TEst 333']
+    }
+];

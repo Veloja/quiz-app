@@ -6,7 +6,6 @@ export function startHandlingQuestions(myArray, chunk_size) {
     return shuffle(results);
 }
 
-
 function shuffle(arrToShuffle) {
     for (let i = arrToShuffle.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -18,7 +17,6 @@ function shuffle(arrToShuffle) {
 function getFiveQuestionsArr(count, array) {
     let tmp = array.slice(array);
     const ret = [];
-    
     for (let i = 0; i < count; i++) {
         let index = Math.floor(Math.random() * tmp.length);
         let removed = tmp.splice(index, 1);
@@ -30,12 +28,18 @@ function getFiveQuestionsArr(count, array) {
 function makeAlwaysFiveDifferentQuestions(array) {
     const res = [];
     for(let i = 0; i < array.length; i++) {
-        // console.log('prvi niz', array[i]);
         for(let j = 0; j < 1; j++) {
-            // console.log('drugi niz', array[i]);
             let tempArr = [...array[i]];
             res.push(tempArr[Math.floor(Math.random() * tempArr.length)]);
         }
     }
     return res;
 }
+
+// function setStateAnswers(fiveQuestions) {
+//     const correctAnwser = fiveQuestions[state.currentQuestion];
+//     const filteredQuestionsNotToHaveCorrectAnsw = questions.filter(question => question !== correctAnwser.continent);
+//     const shuffledArrayWithoutCorrectAnswer = Utils.shuffle(filteredQuestionsNotToHaveCorrectAnsw);
+//     const twoAnswers = Utils.setTwoRemainingAnswers(shuffledArrayWithoutCorrectAnswer);
+//     return { twoAnswers, correctAnwser };
+// }
