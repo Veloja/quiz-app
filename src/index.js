@@ -22,34 +22,9 @@ let score = 0;
 window.onload = LocalStorage.setAllScores();
 let finalQuestions = [];
 
-window.onload = async function() {
-    const questionsFromApi = await allQuestions();
-    const alwaysFiveRandomQuestions = startHandlingQuestions(questionsFromApi, 5);
-    console.log('alwaysFiveRandomQuestions', alwaysFiveRandomQuestions);
-    finalQuestions = alwaysFiveRandomQuestions.map((question, index) => {
-        console.log(question);
-        if(question.continent === alwaysFiveRandomQuestions[index].continent) {
-            const answers = alwaysFiveRandomQuestions.map(answ => {
-                if(answ.continent !== alwaysFiveRandomQuestions[index].continent) {
-                    return answ.continent;
-                }
-            })
-            const onlyTwoAnswers = answers.filter(answ =>
-                answ !== alwaysFiveRandomQuestions[index].continent && answ !== this.undefined
-            ).slice(0, 2);
-            return {
-                question: {
-                    ...question,
-                    answers: [question.continent, ...onlyTwoAnswers]
-                }
-            }
-        }
-    })
-    console.log('finalQuestions', finalQuestions);
-}
-
 function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
+    const shuffled = [...array];
+    return shuffled.sort(() => Math.random() - 0.5);
   }
 
 startBtn.addEventListener('click', startGame);
@@ -64,13 +39,13 @@ function changeQuestion() {
     if(endGame) {
         return
     } else {
-        questionTitle.innerHTML = `Question ${currentQuestionIndex + 1} of ${questions.length}`
-        setNextQuestion(questions[currentQuestionIndex]);
+        questionTitle.innerHTML = `Question ${currentQuestionIndex + 1} of ${finalQuestions.length}`
+        setNextQuestion(finalQuestions[currentQuestionIndex]);
     }
 }
 
 function checkIfEnd() {
-    if(currentQuestionIndex === questions.length) {
+    if(currentQuestionIndex === finalQuestions.length) {
         finishGame();
         return true;
     } else {
@@ -101,14 +76,36 @@ function finishGame() {
     finishEl.innerHTML = `Your score is ${score}`;
 }
 
-function startGame() {
+async function startGame() {
+    const questionsFromApi = await allQuestions();
+    const alwaysFiveRandomQuestions = startHandlingQuestions(questionsFromApi, 5);
+    // on every game start get new 5 random questions from api
+    finalQuestions = alwaysFiveRandomQuestions.map((question, index) => {
+        if(question.continent === alwaysFiveRandomQuestions[index].continent) {
+            const answers = alwaysFiveRandomQuestions.map(answ => {
+                if(answ.continent !== alwaysFiveRandomQuestions[index].continent) {
+                    return answ.continent;
+                }
+            })
+            const onlyTwoAnswers = answers.filter(answ =>
+                answ !== alwaysFiveRandomQuestions[index].continent && answ !== this.undefined
+            ).slice(0, 2);
+            const threeShuffledAnswers = shuffle([question.continent, ...onlyTwoAnswers])
+            return {
+                question: {
+                    ...question,
+                    answers: [...threeShuffledAnswers]
+                }
+            }
+        }
+    })
     scoresElement.classList.add('scores--hidden');
     startBtn.classList.add('btn--hidden');
     questionsEl.classList.remove('questions--hidden');
     currentQuestionIndex = 0;
     score = 0;
-    questionTitle.innerHTML = `Question ${currentQuestionIndex + 1} of ${questions.length}`
-    setNextQuestion(questions[currentQuestionIndex]);
+    questionTitle.innerHTML = `Question ${currentQuestionIndex + 1} of ${finalQuestions.length}`
+    setNextQuestion(finalQuestions[currentQuestionIndex]);
 }
 
 function setNextQuestion(nextQuestion) {
@@ -133,7 +130,7 @@ function showQuestion(question) {
 
 function selectAnswer(event) {
     const selectedBtn = event.target;
-    clearClasses(selectedBtn);
+    clearBtnClasses(selectedBtn);
     const correctAnswer = btns.querySelector('[data-correct]');
     if(selectedBtn.dataset.correct === 'true') {
         selectedBtn.classList.add('correct');
@@ -145,32 +142,7 @@ function selectAnswer(event) {
     nextBtn.classList.remove('btn--hidden');
 };
 
-function clearClasses(element) {
+function clearBtnClasses(element) {
     element.classList.remove('wrong');
     element.classList.remove('correct');
 }
-
-
-const questions = [
-    {
-        question: {
-            image: 'https://i.imgur.com/vWlrNXk.jpg',
-            continent: 'Asia'
-        },
-        answers: ['Antartica', 'Europe', 'Asia']
-    },
-    {
-        question: {
-            image: 'https://i.imgur.com/sczp9om.jpg',
-            continent: 'Europe'
-        },
-        answers: ['Antartica', 'Europe', 'test 22']
-    },
-    {
-        question: {
-            image: 'https://i.imgur.com/nLUAr4P.jpg',
-            continent: 'Antartica'
-        },
-        answers: ['Antartica', 'Europe', 'TEst 333']
-    }
-];

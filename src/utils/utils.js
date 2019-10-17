@@ -9,7 +9,6 @@ export function shuffle(array) {
 export function setTwoRemainingAnswers(array) {
     const results = [];
     while (array.length) {
-        // get two random from shuffled
         results.push(array.splice(0, 2));
     }
     return results[Math.floor(Math.random() * results.length)];

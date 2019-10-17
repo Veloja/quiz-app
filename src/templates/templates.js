@@ -11,7 +11,7 @@ export function showScoreView(scores) {
 }
 
 export function showBtns(question, correctAnwser) {
-    btns.innerHTML = question.answers.map(answ => 
+    btns.innerHTML = question.question.answers.map(answ => 
         `
             <button class="btn btn--answer" 
                 ${answ === correctAnwser && `data-correct="true"`}

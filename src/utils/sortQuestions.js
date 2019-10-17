@@ -35,11 +35,3 @@ function makeAlwaysFiveDifferentQuestions(array) {
     }
     return res;
 }
-
-// function setStateAnswers(fiveQuestions) {
-//     const correctAnwser = fiveQuestions[state.currentQuestion];
-//     const filteredQuestionsNotToHaveCorrectAnsw = questions.filter(question => question !== correctAnwser.continent);
-//     const shuffledArrayWithoutCorrectAnswer = Utils.shuffle(filteredQuestionsNotToHaveCorrectAnsw);
-//     const twoAnswers = Utils.setTwoRemainingAnswers(shuffledArrayWithoutCorrectAnswer);
-//     return { twoAnswers, correctAnwser };
-// }
